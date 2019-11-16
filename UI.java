@@ -16,7 +16,7 @@ public class UI extends JPanel
     public UI(int x, int y, int _size)
     {
         size = _size;
-        setPreferredSize(new Dimension(y * size, x * size));
+        setPreferredSize(new Dimension( y * size,x * size));
 
         window = new JFrame("Pentomino");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,7 +70,7 @@ public class UI extends JPanel
     
     
     
-        state = new int[y][x];
+        state = new int[x][y];
         for (int i = 0; i < state.length; i++)
         {
             for (int j = 0; j < state[i].length; j++)
@@ -94,11 +94,11 @@ public class UI extends JPanel
         localGraphics2D.setColor(Color.GRAY);
         for (int i = 0; i <= state.length; i++)
         {
-            localGraphics2D.drawLine(i * size, 0, i * size, state[0].length * size);
+            localGraphics2D.drawLine(0 , (i * size), state[0].length * size,(i * size));
         }
         for (int i = 0; i <= state[0].length; i++)
         {
-            localGraphics2D.drawLine(0, i * size, state.length * size, i * size);
+            localGraphics2D.drawLine( (i * size),0,  i * size,(state.length * size));
         }
 
         // draw blocks
@@ -107,7 +107,7 @@ public class UI extends JPanel
             for (int j = 0; j < state[0].length; j++)
             {
                 localGraphics2D.setColor(GetColorOfID(state[i][j]));
-                localGraphics2D.fill(new Rectangle2D.Double(i * size + 1, j * size + 1, size - 1, size - 1));
+                localGraphics2D.fill(new Rectangle2D.Double( j * size + 1,i * size + 1, size - 1, size - 1));
             }
         }
         
@@ -137,7 +137,7 @@ public class UI extends JPanel
     {
         for (int i = 0; i < state.length; i++)
         {
-            for (int j = 0; j < state[i].length; j++)
+            for (int j = 0; j < state[0].length; j++)
             {
                 state[i][j] = _state[i][j];
             }

@@ -7,7 +7,6 @@ public class Tetris
 {
 	public static int locW;
 	public static int locH;
-	
 	public static int pentID;
 	public static int mutation;
 	public static int[][] piece;
@@ -17,23 +16,67 @@ public class Tetris
     public static int[][] field = new int[height][width];
     public static UI ui = new UI( height, width, 50);
     public void rotate(int x) {
+    	
     	if (mutation == PentominoDatabase.data[pentID].length-1 && x==1)
     		mutation = 0; else
     	if (mutation == 0 && x == -1)
     		mutation = PentominoDatabase.data[pentID].length-1;
     	else    	
     	mutation = mutation + x;
-    	int piece[][] = PentominoDatabase.data[pentID][mutation];
+    	piece = PentominoDatabase.data[pentID][mutation];
+    	reDraw();
     }
     
     public void move(int x) {
-    	if (locW+x!=-1 || locW+x != width)
+    	if (locW+x!=-1 || locW+x != width) 
+    	{
     		locW+=x;
+    		reDraw();
+    	}
     }
+    
+    
+    
     public void dropDown() {
-    	if(fit())locH+=1;
-    	else {locH=0;nextPiece();}
+    	if(fit()) {locH+=1;reDraw();}
+    	else {locH=0;checkDelRows();nextPiece();}
     }
+    
+    public void checkDelRows() {
+    	boolean lineIsFull = true;
+    	 for (int i = height - 1; i >= 0; i--) {
+    		  for (int j = 0; j < width; j++) {
+    			  if (field[i][j] == -1) {
+
+                      lineIsFull = false;
+                  }
+    			  if (lineIsFull == true)
+    				  moveOneRow(i);
+              }
+    	}
+    }
+    
+    public void reDraw() {
+    	for(int i = 0; i < field.length; i++)
+        {
+        	for(int j = 0; j < field[i].length; j++)
+        	{
+        		if(field[i][j] == pentID) field[i][j] = -1;
+        		
+        	}
+        }
+    	addPiece();
+    }
+    
+	public void  moveOneRow(int row) {
+		for (int j = row-1; j > 0; j--) {
+			for (int i = 1; i < width; i++) {
+				field[j+1][i] = field[j][i];
+			}
+		}
+	}
+    
+    
     public static int start(){
 
         for(int i = 0; i < field.length; i++)
@@ -59,7 +102,6 @@ public class Tetris
  		locW = 0;
  		locH = 0;
         addPiece();
-        ui.setState(field);
  		
     }
 
@@ -128,7 +170,7 @@ public class Tetris
    	    		{
    	    			return false;
    	    		}
-   	    		if (field[cx][cy] != -1) 
+   	    		if (field[cx][cy] != -1 || field[cx][cy] != pentID ) 
    	    		{
    	    			return false;
    	    		}
@@ -153,7 +195,7 @@ public class Tetris
             	field[cx][cy] = pentID;
             }
         }
-        
+        ui.setState(field);
     }
 
 
