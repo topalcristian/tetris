@@ -32,20 +32,20 @@ public class UI extends JPanel
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
-					t.rotate(1);
-					break;
-				case KeyEvent.VK_DOWN:
 					t.rotate(-1);
 					break;
+				case KeyEvent.VK_DOWN:
+					t.rotate(1);
+					break;
 				case KeyEvent.VK_LEFT:
-					t.move(1);
+					t.move(-1);
 					break;
 				case KeyEvent.VK_RIGHT:
-					t.move(-1);
+					t.move(1);
 					break;
 				case KeyEvent.VK_SPACE:
 					t.dropDown();
-					t.score += 1;
+
 					break;
 				} 
 			}
@@ -117,27 +117,27 @@ public class UI extends JPanel
     // Decodes the ID of a pentomino into a color
     private Color GetColorOfID(int i)
     {
-        switch (i)  { 
-         case 0:  return Color.BLUE;
-         case 1:  return Color.ORANGE;
-         case 2:  return Color.CYAN;
-         case 3:  return Color.GREEN;
-         case 4:  return Color.MAGENTA;
-         case 5:  return Color.PINK;
-         case 6:  return Color.RED;
-         case 7:  return Color.YELLOW;
-         case 8:  return Color.YELLOW;
-         case 9:  return new Color(255,250,240);
-         case 10:  return new Color(250,235,215);
-         case 11:  return new Color(81,47,47);
-         case 12:  return new Color(81,47,23);
-         case 13:  return new Color(0, 150, 128);
-         case 14:  return new Color(0, 150, 102);
-         case 15:  return new Color(51, 200,128);
-         case 16:  return new Color(51, 200,102);
-         case 17:  return new Color(0, 100, 0);
-         default: return Color.LIGHT_GRAY;
-	}
+    	switch (i)  { 
+        case 0:  return Color.BLUE;
+        case 1:  return Color.ORANGE;
+        case 2:  return Color.CYAN;
+        case 3:  return Color.GREEN;
+        case 4:  return Color.MAGENTA;
+        case 5:  return Color.PINK;
+        case 6:  return Color.RED;
+        case 7:  return Color.YELLOW;
+        case 8:  return Color.YELLOW;
+        case 9:  return new Color(255,250,240);
+        case 10:  return new Color(250,235,215);
+        case 11:  return new Color(81,47,47);
+        case 12:  return new Color(81,47,23);
+        case 13:  return new Color(0, 150, 128);
+        case 14:  return new Color(0, 150, 102);
+        case 15:  return new Color(51, 200,128);
+        case 16:  return new Color(51, 200,102);
+        case 17:  return new Color(0, 100, 0);
+        default: return Color.LIGHT_GRAY;
+    	}
     }
 
     // This function should be called to update the displayed state (Makes a copy)

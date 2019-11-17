@@ -16,43 +16,86 @@ public class Tetris
     public static int[][] field = new int[height][width];
     public static UI ui = new UI( height, width, 50);
     public void rotate(int x) {
-    	
-    	if (mutation == PentominoDatabase.data[pentID].length-1 && x==1)
-    		mutation = 0; else
-    	if (mutation == 0 && x == -1)
-    		mutation = PentominoDatabase.data[pentID].length-1;
-    	else    	
-    	mutation = mutation + x;
-    	piece = PentominoDatabase.data[pentID][mutation];
-    	reDraw();
-    }
+   	int stMutation=mutation;
+   	if (mutation == PentominoDatabase.data[pentID].length-1 && x==1)
+   		mutation = 0; else
+   	if (mutation == 0 && x == -1)
+   		mutation = PentominoDatabase.data[pentID].length-1;
+   	else    	
+   	mutation = mutation + x;
+   	if (fitInMove(0,0)) // if new position feet then
+		{
+   		piece = PentominoDatabase.data[pentID][mutation];
+   		reDraw();
+		}
+   	else {
+   		mutation = stMutation;
+   	}
+   	
+   } 
     
-    public void move(int x) {
-    	if (locW+x!=-1 || locW+x != width) 
-    	{
-    		locW+=x;
-    		reDraw();
-    	}
-    }
+	public void move(int x) {
+		if (locW + x >= 0 && locW + x < width) {
+			if (fitInMove(x,0)) // if new position feet then
+			{
+				locW += x;
+				reDraw();
+			}
+		}
+	}
     
+	public void dropDown() {
+		if (fitInMove(0,1)) { 
+			locH += 1;
+			reDraw();
+		} else {
+			locH = 0;
+			checkDelRows();
+			nextPiece();
+		}
+	}
+	
+	public static boolean fitInMove(int x, int y)
+	{
+    	int[][] pieceTemp = PentominoDatabase.data[pentID][mutation];
+
+	    for(int i = 0; i < pieceTemp.length; i++) 
+	    {
+	    	for(int j = 0; j < pieceTemp[0].length; j++) 
+	    	{
+	    		if (pieceTemp[i][j] == 0 ) 
+	    		{
+	    			continue;
+	    		}
+	    		int cx = i  + locH + y;
+	    		int cy = j  + locW + x;
+	    		if (cx < 0 || cy < 0 || cx >= field.length || cy >= field[0].length) 
+	    		{
+	    			return false;
+	    		}
+	    		if (field[cx][cy] > -1 && field[cx][cy] != pentID ) 
+	    		{
+	    			return false;
+	    		}
+	    	}
+	    }
+	    return true;
+	}
     
-    
-    public void dropDown() {
-    	if(fit()) {locH+=1;reDraw();}
-    	else {locH=0;checkDelRows();nextPiece();}
-    }
-    
+
     public void checkDelRows() {
     	boolean lineIsFull = true;
     	 for (int i = height - 1; i >= 0; i--) {
+    		 lineIsFull = true;
     		  for (int j = 0; j < width; j++) {
     			  if (field[i][j] == -1) {
 
                       lineIsFull = false;
                   }
-    			  if (lineIsFull == true)
-    				  moveOneRow(i);
+
               }
+			  if (lineIsFull == true)
+				  moveOneRow(i);
     	}
     }
     
@@ -70,7 +113,7 @@ public class Tetris
     
 	public void  moveOneRow(int row) {
 		for (int j = row-1; j > 0; j--) {
-			for (int i = 1; i < width; i++) {
+			for (int i = 0; i < width; i++) {
 				field[j+1][i] = field[j][i];
 			}
 		}
