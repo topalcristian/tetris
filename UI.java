@@ -117,19 +117,27 @@ public class UI extends JPanel
     // Decodes the ID of a pentomino into a color
     private Color GetColorOfID(int i)
     {
-        if(i==0) {return Color.BLUE;}
-        else if(i==1) {return Color.ORANGE;}
-        else if(i==2) {return Color.CYAN;}
-        else if(i==3) {return Color.GREEN;}
-        else if(i==4) {return Color.MAGENTA;}
-        else if(i==5) {return Color.PINK;}
-        else if(i==6) {return Color.RED;}
-        else if(i==7) {return Color.YELLOW;}
-        else if(i==8) {return new Color(0, 0, 0);}
-        else if(i==9) {return new Color(0, 0, 100);}
-        else if(i==10) {return new Color(100, 0,0);}
-        else if(i==11) {return new Color(0, 100, 0);}
-        else {return Color.LIGHT_GRAY;}
+        switch (i)  { 
+         case 0:  return Color.BLUE;
+         case 1:  return Color.ORANGE;
+         case 2:  return Color.CYAN;
+         case 3:  return Color.GREEN;
+         case 4:  return Color.MAGENTA;
+         case 5:  return Color.PINK;
+         case 6:  return Color.RED;
+         case 7:  return Color.YELLOW;
+         case 8:  return Color.YELLOW;
+         case 9:  return new Color(255,250,240);
+         case 10:  return new Color(250,235,215);
+         case 11:  return new Color(81,47,47);
+         case 12:  return new Color(81,47,23);
+         case 13:  return new Color(0, 150, 128);
+         case 14:  return new Color(0, 150, 102);
+         case 15:  return new Color(51, 200,128);
+         case 16:  return new Color(51, 200,102);
+         case 17:  return new Color(0, 100, 0);
+         default: return Color.LIGHT_GRAY;
+
     }
 
     // This function should be called to update the displayed state (Makes a copy)
