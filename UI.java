@@ -137,7 +137,7 @@ public class UI extends JPanel
          case 16:  return new Color(51, 200,102);
          case 17:  return new Color(0, 100, 0);
          default: return Color.LIGHT_GRAY;
-
+	}
     }
 
     // This function should be called to update the displayed state (Makes a copy)
