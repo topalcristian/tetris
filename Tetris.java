@@ -15,16 +15,17 @@ public class Tetris
     
     public void rotate(int x) {
    	int stMutation=mutation;
-   	if (mutation == PentominoDatabase.data[pentID].length-1 && x==1)
+   	if (mutation == PentominoDatabase.data[pentID].length - 1 && x==1)
    		mutation = 0; else
    	if (mutation == 0 && x == -1)
-   		mutation = PentominoDatabase.data[pentID].length-1;
+   		mutation = PentominoDatabase.data[pentID].length - 1;
    	else    	
    	mutation = mutation + x;
    	if (fitInMove(0,0)) // if new position feet then
 		{
-   		piece = PentominoDatabase.data[pentID][mutation];
    		reDraw();
+   		piece = PentominoDatabase.data[pentID][mutation];
+   		addPiece();
 		}
    	else {
    		mutation = stMutation;
@@ -36,16 +37,18 @@ public class Tetris
 		if (locW + x >= 0 && locW + x < width) {
 			if (fitInMove(x,0)) // if new position feet then
 			{
-				locW += x;
 				reDraw();
+				locW += x;
+				addPiece();
 			}
 		}
 	}
     
 	public void dropDown() {
-		if (fitInMove(0,1)) { 
+		if (fitInMove(0,1)) {
+			reDraw(); 
 			locH += 1;
-			reDraw();
+			addPiece();
 		} else {
 			locH = 0;
 			checkDelRows();
@@ -83,35 +86,41 @@ public class Tetris
 	}
     
 
-    public void checkDelRows() {
-    	boolean lineIsFull = true;
-    	 for (int i = height - 1; i >= 0; i--) {
-    		 lineIsFull = true;
-    		  for (int j = 0; j < width; j++) {
-    			  if (field[i][j] == -1) {
-
-                      lineIsFull = false;
-                  }
-
-              }
-			  if (lineIsFull == true)
-				  {
-				  moveOneRow(i);
-				  score += 5;
-				  }
-    	}
-    }
+	public void checkDelRows() {
+		boolean lineIsFull = true;
+		for (int i = 0; i < height;  i++) {
+			lineIsFull = true;
+			for (int j = 0; j < width; j++) {
+				if (field[i][j] == -1) {
+					lineIsFull = false;
+				}
+			}
+			if (lineIsFull == true) {
+				moveOneRow(i);
+				score += 5;
+			}
+		}
+	}
     
     public void reDraw() {
-    	for(int i = 0; i < field.length; i++)
-        {
-        	for(int j = 0; j < field[i].length; j++)
-        	{
-        		if(field[i][j] == pentID) field[i][j] = -1;
-        		
-        	}
-        }
-    	addPiece();
+    	for(int i = 0; i < piece.length; i++) 
+	    {
+	    	for(int j = 0; j < piece[0].length; j++) 
+	    	{
+	    		if (piece[i][j] == 0 ) 
+	    		{
+	    			continue;
+	    		}
+	    		int cx = i  + locH;
+	    		int cy = j  + locW;
+
+	    		if (field[cx][cy] == pentID ) 
+	    		{
+	    			field[cx][cy] = -1;
+	    		}
+	    	}
+	    }
+
     }
     
 	public void  moveOneRow(int row) {
@@ -171,7 +180,7 @@ public class Tetris
             	}
             	int cx = i + locH;
             	int cy = j + locW;
-            	field[cx][cy] = pentID;
+            	field[cx][cy] = pentID ;
             }
         }
         ui.setState(field);
