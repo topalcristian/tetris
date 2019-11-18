@@ -11,12 +11,12 @@ public class UI extends JPanel
     private JFrame window;
     private int[][] state;
     private int size;
-
+    
     // Constructor: sets everything up
     public UI(int x, int y, int _size)
     {
         size = _size;
-        setPreferredSize(new Dimension( y * size,x * size));
+        setPreferredSize(new Dimension( 3*y * size, 200 + x * size));
 
         window = new JFrame("Pentomino");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +24,15 @@ public class UI extends JPanel
         window.add(this);
         window.pack();
         window.setVisible(true);
+        /*JLabel label = new JLabel("");
+        label.setHorizontalAlignment(SwingConstants.LEFT); // set the horizontal alignement on the x axis !
+        label.setVerticalAlignment(SwingConstants.TOP); // set the verticalalignement on the y axis !
+        label.setFont(new java.awt.Font("Arial", Font.BOLD, 23));
+        label.setOpaque(true);
+        label.setBackground(Color.GRAY);
+        label.setForeground(Color.BLACK);
+        window.add(label);*/
+
         Tetris t = new Tetris();
         window.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
@@ -65,10 +74,7 @@ public class UI extends JPanel
 				}
 			}
 		}.start();
-	
-    
-    
-    
+
     
         state = new int[x][y];
         for (int i = 0; i < state.length; i++)
@@ -81,24 +87,35 @@ public class UI extends JPanel
         
         
     }
+    
+    public void gameLost() {
+    	JOptionPane.showMessageDialog(this,"Game Over\nYour Score is : " + Tetris.score);  
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.exit(0);
+    }
 
     // Paint function, called by the system if required for a new frame, uses the state stored by the UI class
     public void paintComponent(Graphics g)
     {
         Graphics2D localGraphics2D = (Graphics2D) g;
 
-        localGraphics2D.setColor(Color.LIGHT_GRAY);
-        localGraphics2D.fill(getVisibleRect());
+        //localGraphics2D.setColor(Color.LIGHT_GRAY);
+        //localGraphics2D.fill(getVisibleRect());
 
         // draw lines
+        Font myFont = new Font("ARIAL", Font.BOLD, 40);
+        localGraphics2D.setFont(myFont);
+
+        localGraphics2D.drawString("Tetris", 100, 100);
+        
         localGraphics2D.setColor(Color.GRAY);
         for (int i = 0; i <= state.length; i++)
         {
-            localGraphics2D.drawLine(0 , (i * size), state[0].length * size,(i * size));
+            localGraphics2D.drawLine(20 , (i * size)+180, state[0].length * size+20,(i * size)+180);
         }
         for (int i = 0; i <= state[0].length; i++)
         {
-            localGraphics2D.drawLine( (i * size),0,  i * size,(state.length * size));
+            localGraphics2D.drawLine( (i * size)+20, 0+180,  i * size+20,(state.length * size)+180);
         }
 
         // draw blocks
@@ -107,7 +124,7 @@ public class UI extends JPanel
             for (int j = 0; j < state[0].length; j++)
             {
                 localGraphics2D.setColor(GetColorOfID(state[i][j]));
-                localGraphics2D.fill(new Rectangle2D.Double( j * size + 1,i * size + 1, size - 1, size - 1));
+                localGraphics2D.fill(new Rectangle2D.Double( j * size + 1+20,i * size + 1+180, size - 1, size - 1));
             }
         }
         

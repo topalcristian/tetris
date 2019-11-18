@@ -1,7 +1,4 @@
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Tetris
 {
@@ -15,6 +12,7 @@ public class Tetris
     public static int score = 0;
     public static int[][] field = new int[height][width];
     public static UI ui = new UI( height, width, 50);
+    
     public void rotate(int x) {
    	int stMutation=mutation;
    	if (mutation == PentominoDatabase.data[pentID].length-1 && x==1)
@@ -54,7 +52,9 @@ public class Tetris
 			nextPiece();
 		}
 	}
-	
+
+	// Checks if the Pentomino fits from the selected start point
+
 	public static boolean fitInMove(int x, int y)
 	{
     	int[][] pieceTemp = PentominoDatabase.data[pentID][mutation];
@@ -95,7 +95,10 @@ public class Tetris
 
               }
 			  if (lineIsFull == true)
+				  {
 				  moveOneRow(i);
+				  score += 5;
+				  }
     	}
     }
     
@@ -138,89 +141,22 @@ public class Tetris
     }
     
     public static void nextPiece() {
+    	
     	Random r = new Random();
     	pentID = r.nextInt(PentominoDatabase.data.length);
  		mutation = r.nextInt(PentominoDatabase.data[pentID].length);
  		piece = PentominoDatabase.data[pentID][mutation];
  		locW = 0;
  		locH = 0;
+ 		if (fitInMove(0,0)) {
         addPiece();
- 		
+        }
+    	else 
+    	{
+    		ui.gameLost();
+    	}
     }
 
-    private static int characterToID(char character) {
-    	int pentID = -1; 
-    	if (character == 'X') {
-    		pentID = 0;
-    	} else if (character == 'I') {
-    		pentID = 1;
-    	} else if (character == 'Z') {
-    		pentID = 2;
-    	} else if (character == 'T') {
-    		pentID = 3;
-    	} else if (character == 'U') {
-    		pentID = 4;
-     	} else if (character == 'V') {
-     		pentID = 5;
-     	} else if (character == 'W') {
-     		pentID = 6;
-     	} else if (character == 'Y') {
-     		pentID = 7;
-    	} else if (character == 'L') {
-    		pentID = 8;
-    	} else if (character == 'P') {
-    		pentID = 9;
-    	} else if (character == 'N') {
-    		pentID = 10;
-    	} else if (character == 'F') {
-    		pentID = 11;
-    	} 
-    	return pentID;
-    }
-
-    // Checks if the Pentomino fits from the selected start point
-
-
-    public static boolean fit()
-   	{
-       	int[][] pieceTemp = PentominoDatabase.data[pentID][mutation];
-       	int ii = -1, jj = -1;
-
-       	for(int i = 0; i < pieceTemp.length; i++) 
-       	{
-   	    	for(int j = 0; j < pieceTemp[0].length; j++) 
-   	    	{
-   	    		if (pieceTemp[i][j] == 1 && ii == -1) 
-   	    		{
-   	    			ii = i;
-   	    			jj = j; 
-   	    			break;
-   	    		}
-   	    	}
-   	    }
-
-   	    for(int i = 0; i < pieceTemp.length; i++) 
-   	    {
-   	    	for(int j = 0; j < pieceTemp[0].length; j++) 
-   	    	{
-   	    		if (pieceTemp[i][j] == 0 ) 
-   	    		{
-   	    			continue;
-   	    		}
-   	    		int cx = i - ii + locW;
-   	    		int cy = j - jj + locH;
-   	    		if (cx < 0 || cy < 0 || cx >= field.length || cy >= field[0].length) 
-   	    		{
-   	    			return false;
-   	    		}
-   	    		if (field[cx][cy] != -1 || field[cx][cy] != pentID ) 
-   	    		{
-   	    			return false;
-   	    		}
-   	    	}
-   	    }
-   	    return true;
-   	}
 
     public static void addPiece()
     {
