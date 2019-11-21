@@ -64,7 +64,7 @@ public class UI extends JPanel
 		});
 		
 		// Make the falling piece drop every second
-		new Thread() {
+	new Thread() {
 			@Override public void run() {
 				while (true) {
 					try {
@@ -153,7 +153,9 @@ public class UI extends JPanel
         case 15:  return new Color(51, 200,128);
         case 16:  return new Color(51, 200,102);
         case 17:  return new Color(0, 100, 0);
+        case 18:  return new Color(22, 22, 22);
         default: return Color.LIGHT_GRAY;
+        
     	}
     }
 
@@ -164,7 +166,7 @@ public class UI extends JPanel
         {
             for (int j = 0; j < state[0].length; j++)
             {
-                state[i][j] = _state[i][j];
+                if(_state[i][j]!=18) state[i][j] = _state[i][j];
             }
         }
 
