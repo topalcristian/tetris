@@ -90,7 +90,6 @@ public class UI extends JPanel
     
     public void gameLost() {
     	JOptionPane.showMessageDialog(this,"Game Over\nYour Score is : " + Tetris.score);  
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         System.exit(0);
     }
 
@@ -160,13 +159,15 @@ public class UI extends JPanel
     }
 
     // This function should be called to update the displayed state (Makes a copy)
-    public void setState(int[][] _state)
+    public void setState(int[][] _state, int[][] _state2)
     {
         for (int i = 0; i < state.length; i++)
         {
             for (int j = 0; j < state[0].length; j++)
             {
-                if(_state[i][j]!=18) state[i][j] = _state[i][j];
+                if(_state[i][j]!=18)
+                	state[i][j] = _state[i][j];
+                else state[i][j] = _state2[i][j];
             }
         }
 

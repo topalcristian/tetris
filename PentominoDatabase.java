@@ -22,6 +22,7 @@ public class PentominoDatabase
         try
         {
             Scanner scanner = new Scanner(file);
+
             while (scanner.hasNextLine()) // For ach line in the CSV file
             {
                 // Read the line, and convert the string to a list of numbers
@@ -46,6 +47,7 @@ public class PentominoDatabase
                 // Add piece to the dynamic list
                 dynamicList.get(dynamicList.size() - 1).add(piece);
             }
+            scanner.close();
         }
         catch (FileNotFoundException e)
         {
@@ -85,4 +87,5 @@ public class PentominoDatabase
         }
         
     }
+
 }

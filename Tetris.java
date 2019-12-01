@@ -10,6 +10,7 @@ public class Tetris {
 	public static int height = 12;
 	public static int score = 0;
 	public static int[][] field = new int[height][width];
+	public static int[][] field2 = new int[height][width];
 	public static UI ui = new UI(height, width, 50);
 
 	public void rotate(int x) {
@@ -27,9 +28,9 @@ public class Tetris {
 			addPiece();
 		} else {
 			int [][]tempPiece = PentominoDatabase.data[pentID][mutation];
-			if (fitInMove(0 - tempPiece[0].length, 0)) // if new position fit then
+			if (fitInMove(0 - tempPiece[0].length/2, 0)) // if new position fit then
 			{
-				locW = locW - tempPiece[0].length;  
+				locW = locW - tempPiece[0].length/2;  
 				reDraw();
 				piece = PentominoDatabase.data[pentID][mutation];
 				addPiece();
@@ -57,10 +58,9 @@ public class Tetris {
 			locH += 1;
 			addPiece();
 		} else {
-
+			onTable();
 			locH = 0;
 			checkDelRows();
-			onTable();
 			nextPiece();
 		}
 	}
@@ -68,8 +68,10 @@ public class Tetris {
 	public static void onTable() {
 		for (int i = 0; i < field.length; i++) {
 			for (int j = 0; j < field[i].length; j++) {
-				if (field[i][j] > 1)
+				if (field[i][j] == pentID) {
+					field2[i][j] = pentID;
 					field[i][j] = 18;
+					}
 			}
 		}
 	}
@@ -113,19 +115,13 @@ public class Tetris {
 	}
 
 	public void reDraw() {
-		for (int i = 0; i < piece.length; i++) {
-			for (int j = 0; j < piece[0].length; j++) {
-				if (piece[i][j] == 0) {
-					continue;
+		for (int i = 0; i < field.length; i++) {
+			for (int j = 0; j < field[0].length; j++) {
+				if (field[i][j] == pentID) {
+ 					field[i][j] = -1;
 				}
-				int cx = i + locH;
-				int cy = j + locW;
 
-				if (field[cx][cy] == pentID) {
-					field[cx][cy] = -1;
-				}
-			}
-		}
+			}}
 
 	}
 
@@ -133,6 +129,7 @@ public class Tetris {
 		for (int j = row - 1; j > 0; j--) {
 			for (int i = 0; i < width; i++) {
 				field[j + 1][i] = field[j][i];
+				field2[j + 1][i] = field2[j][i];
 			}
 		}
 	}
@@ -179,7 +176,7 @@ public class Tetris {
 				field[cx][cy] = pentID;
 			}
 		}
-		ui.setState(field);
+		ui.setState(field, field2);
 	}
 
 	public static void main(String[] args) {
