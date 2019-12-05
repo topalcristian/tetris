@@ -7,7 +7,7 @@ public class Tetris {
 	public static int mutation;
 	public static int[][] piece;
 	public static int width = 5;
-	public static int height = 12;
+	public static int height = 15;
 	public static int score = 0;
 	public static int[][] field = new int[height][width];
 	public static int[][] field2 = new int[height][width];
@@ -16,7 +16,7 @@ public class Tetris {
 	public void rotate(int x) {
 		int stMutation = mutation;
 		if (mutation == PentominoDatabase.data[pentID].length - 1 && x == 1)
-			mutation = 0;
+			mutation = 0; 
 		else if (mutation == 0 && x == -1)
 			mutation = PentominoDatabase.data[pentID].length - 1;
 		else
@@ -28,9 +28,9 @@ public class Tetris {
 			addPiece();
 		} else {
 			int [][]tempPiece = PentominoDatabase.data[pentID][mutation];
-			if (fitInMove(0 - tempPiece[0].length/2, 0)) // if new position fit then
+			if (fitInMove(5 - (tempPiece[0].length) - locW, 0)) // if new position fit then
 			{
-				locW = locW - tempPiece[0].length/2;  
+				locW = 5 - (tempPiece[0].length);  
 				reDraw();
 				piece = PentominoDatabase.data[pentID][mutation];
 				addPiece();
