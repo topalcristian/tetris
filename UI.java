@@ -139,20 +139,20 @@ public class UI extends JPanel
         case 2:  return Color.CYAN;
         case 3:  return Color.GREEN;
         case 4:  return Color.MAGENTA;
-        case 5:  return Color.PINK;
+        case 5:  return new Color(250,190,190);  //Pink
         case 6:  return Color.RED;
         case 7:  return Color.YELLOW;
-        case 8:  return Color.YELLOW;
-        case 9:  return new Color(255,250,240);
-        case 10:  return new Color(250,235,215);
-        case 11:  return new Color(81,47,47);
-        case 12:  return new Color(81,47,23);
-        case 13:  return new Color(0, 150, 128);
-        case 14:  return new Color(0, 150, 102);
-        case 15:  return new Color(51, 200,128);
-        case 16:  return new Color(51, 200,102);
-        case 17:  return new Color(0, 100, 0);
-        case 18:  return new Color(22, 22, 22);
+        case 8:  return new Color(210,245,60);   //Lime
+        case 9:  return new Color(145,30,180);   //Purple
+        case 10:  return new Color(230,190,255); //Lavender
+        case 11:  return new Color(170,110,40);  //Brown
+        case 12:  return new Color(128,0,0);     //Olive
+        case 13:  return new Color(0, 0, 128);   //Navy
+        case 14:  return new Color(0, 128, 128); //Teal
+        case 15:  return new Color(255,215,180); //Apricot
+        case 16:  return new Color(170,255,195); //Mint
+        case 17:  return new Color(128,0,0);     //Maroon
+        case 18:  return new Color(255,250,200); //Beige
         default: return Color.LIGHT_GRAY;
         
     	}

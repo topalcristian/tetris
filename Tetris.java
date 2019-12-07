@@ -141,7 +141,8 @@ public class Tetris {
 				field[i][j] = -1;
 			}
 		}
-
+		
+		//testBestOrder();
 		nextPiece();
 
 		return 1;
