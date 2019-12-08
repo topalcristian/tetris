@@ -13,7 +13,7 @@ public class Bot extends HeapSort {
 	public static int[][] field = new int[height][width];
 	public static int[][] field2 = new int[height][width];
 	
-	//public static UI ui = new UI(height, width, 50);
+	public static UI ui = new UI(height, width, 50);
 	
 	public static void main(String[] args) {
 
@@ -39,7 +39,7 @@ public class Bot extends HeapSort {
 			generation++;
 			population = mutatePopulation(crossover(population));
 			System.out.println("Generation "+ generation + "\n Best Individual Fitness = " + population[0].getFitness());
-			if(population[0].getFitness() != 5)
+			if(population[0].getFitness() == 5)
 				show(population);
 			else
 				System.out.println("Individual " + 1 + " : " + population[0].genoToPhenotype() + "\n" + " Fitness : " +  population[0].getFitness());
@@ -125,9 +125,15 @@ public class Bot extends HeapSort {
 		nextPiece();
 		while (fitInMove(0,0)) {
 			
-		field = best(allOutcomesPossible(pentID, field), chromosome);
+		field = best(allOutcomesPossible(pentID), chromosome);
 		//addPiece();
-		//ui.setState(field, field2);
+		ui.setState(field, field2);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		onTable();
 		checkDelRows();
 		nextPiece();
@@ -143,7 +149,7 @@ public class Bot extends HeapSort {
 		for(int j = 0; j < fields.length; j++) {
 		for(int i = 1; i < fields[0].length; i++) {
 			score1 = calculateHeight(fields[j][i])*chromosome[0] + calculateHoles(fields[j][i])*chromosome[1] + calculateLines(fields[j][i])*chromosome[2] + calculateBumpiness(fields[j][i])*chromosome[3]; 
-			if (score1 < score2) {score2 = score1; z = i;x = j;}
+			if (score1 < score2) {score2 = score1; z = i;x = j;System.out.println(score2);}
 		}
 		}
 
@@ -152,17 +158,19 @@ public class Bot extends HeapSort {
 	}
 	
 	
-	private static int[][][][] allOutcomesPossible(int ID, int[][] field){
+	private static int[][][][] allOutcomesPossible(int ID){
 		int[][] field2 = field;
 		int[][][][] outcome = new int[PentominoDatabase.data[ID].length][width][height][width];
 		for (int j = 0; j < outcome.length; j++) {
 		for (int i = 0; i < outcome[0].length; i++) {
 			locW=i;
+			locH=0;
 			if(fitInMove(0,0)) {
 			while(fitInMove(0,1)) {
 				locH++;
 			}
 			addPiece();
+			locH=0;
 			outcome[j][i] = field;
 			field = field2;
 			}

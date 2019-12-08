@@ -20,7 +20,7 @@ public class UI extends JPanel
 
         window = new JFrame("Pentomino");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
+        window.setResizable(true);
         window.add(this);
         window.pack();
         window.setVisible(true);
@@ -131,7 +131,7 @@ public class UI extends JPanel
         }
         
         
-        
+        /*
         // next piece grid
         localGraphics2D.setColor(Color.GRAY);
         for (int i = 0; i < 6; i++){
@@ -156,7 +156,7 @@ public class UI extends JPanel
             }
         }
         
-
+*/
     }
 
     // Decodes the ID of a pentomino into a color
