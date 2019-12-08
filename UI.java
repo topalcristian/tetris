@@ -106,7 +106,10 @@ public class UI extends JPanel
         localGraphics2D.setFont(myFont);
 
         localGraphics2D.drawString("Tetris", 100, 100);
-        
+        Font myFont2 = new Font("ARIAL", Font.BOLD, 20);
+        localGraphics2D.setFont(myFont2);
+        localGraphics2D.drawString("Score    "+ Tetris.score, 330, 500);  
+        localGraphics2D.drawString("Next Piece    ", 330, 200);  
         localGraphics2D.setColor(Color.GRAY);
         for (int i = 0; i <= state.length; i++)
         {
@@ -124,6 +127,32 @@ public class UI extends JPanel
             {
                 localGraphics2D.setColor(GetColorOfID(state[i][j]));
                 localGraphics2D.fill(new Rectangle2D.Double( j * size + 1+20,i * size + 1+180, size - 1, size - 1));
+            }
+        }
+        
+        
+        
+        // next piece grid
+        localGraphics2D.setColor(Color.GRAY);
+        for (int i = 0; i < 6; i++){
+            localGraphics2D.drawLine(i*40+330, 220, i * 40+330, 420);
+        }
+        for (int i = 0; i < 6; i++){
+            localGraphics2D.drawLine(330, i*40+220, 530, i*40+220);
+        }
+        // next piece fill
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                if(Tetris.Npiece.length>i && Tetris.Npiece[i].length>j){
+                    if(Tetris.Npiece[i][j]==1){
+                        localGraphics2D.setColor(GetColorOfID(Tetris.NpentID));
+                    }else{
+                    localGraphics2D.setColor(Color.LIGHT_GRAY);
+                    }
+                }else{
+                    localGraphics2D.setColor(Color.LIGHT_GRAY);
+                }
+                localGraphics2D.fill(new Rectangle2D.Double(i*40 +331, j * 40 +221, 40 - 1, 40 - 1));
             }
         }
         

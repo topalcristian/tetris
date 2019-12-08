@@ -12,7 +12,10 @@ public class Tetris {
 	public static int[][] field = new int[height][width];
 	public static int[][] field2 = new int[height][width];
 	public static UI ui = new UI(height, width, 50);
-
+	public static int NpentID;
+	public static int Nmutation;
+	public static int[][] Npiece;
+	
 	public void rotate(int x) {
 		int stMutation = mutation;
 		if (mutation == PentominoDatabase.data[pentID].length - 1 && x == 1)
@@ -109,7 +112,7 @@ public class Tetris {
 			}
 			if (lineIsFull == true) {
 				moveOneRow(i);
-				score += 5;
+				score += 1;
 			}
 		}
 	}
@@ -141,7 +144,10 @@ public class Tetris {
 				field[i][j] = -1;
 			}
 		}
-		
+		Random r = new Random();
+		NpentID = r.nextInt(PentominoDatabase.data.length);
+		Nmutation = r.nextInt(PentominoDatabase.data[NpentID].length);
+		Npiece = PentominoDatabase.data[NpentID][Nmutation];
 		//testBestOrder();
 		nextPiece();
 
@@ -150,10 +156,13 @@ public class Tetris {
 
 	public static void nextPiece() {
 
+		pentID = NpentID;
+		mutation = Nmutation;
+		piece = Npiece;
 		Random r = new Random();
-		pentID = r.nextInt(PentominoDatabase.data.length);
-		mutation = r.nextInt(PentominoDatabase.data[pentID].length);
-		piece = PentominoDatabase.data[pentID][mutation];
+		NpentID = r.nextInt(PentominoDatabase.data.length);
+		Nmutation = r.nextInt(PentominoDatabase.data[NpentID].length);
+		Npiece = PentominoDatabase.data[NpentID][Nmutation];
 		locW = 0;
 		locH = 0;
 		if (fitInMove(0, 0)) {

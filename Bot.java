@@ -12,13 +12,13 @@ public class Bot extends HeapSort {
 	public static int score = 0;
 	public static int[][] field = new int[height][width];
 	public static int[][] field2 = new int[height][width];
+	
 	//public static UI ui = new UI(height, width, 50);
+	
 	public static void main(String[] args) {
 
 		int popSize = 500;
 		
-
-		Random generator = new Random(System.currentTimeMillis());
 		Individual[] population = new Individual[popSize];
 		
 		//initializing world
@@ -34,6 +34,7 @@ public class Bot extends HeapSort {
 		int generation = 0;
 
 		while(population[0].getFitness() != 5) {
+			
 			fitnessGenerator(population);
 			generation++;
 			population = mutatePopulation(crossover(population));
@@ -44,6 +45,8 @@ public class Bot extends HeapSort {
 				System.out.println("Individual " + 1 + " : " + population[0].genoToPhenotype() + "\n" + " Fitness : " +  population[0].getFitness());
 		}
 	}
+	
+	//To think 
 	private static int calculateHeight(int[][] fieldCalc){
 		int h = 0;
 		for(int j = 0; j < fieldCalc[0].length; j++) {
@@ -111,6 +114,7 @@ public class Bot extends HeapSort {
 		}
 		sort(individual);
 	}
+
 	private static int play(double[] chromosome) {
 		int score = 0;
 		for (int i = 0; i < field.length; i++) {
@@ -168,57 +172,7 @@ public class Bot extends HeapSort {
 		return outcome;
 	}
 	
-	public static void rotate(int x) {
-		int stMutation = mutation;
-		if (mutation == PentominoDatabase.data[pentID].length - 1 && x == 1)
-			mutation = 0; 
-		else if (mutation == 0 && x == -1)
-			mutation = PentominoDatabase.data[pentID].length - 1;
-		else
-			mutation = mutation + x;
-		if (fitInMove(0, 0)) // if new position fit then
-		{
-			reDraw();
-			piece = PentominoDatabase.data[pentID][mutation];
-			addPiece();
-		} else {
-			int [][]tempPiece = PentominoDatabase.data[pentID][mutation];
-			if (fitInMove(5 - (tempPiece[0].length) - locW, 0)) // if new position fit then
-			{
-				locW = 5 - (tempPiece[0].length);  
-				reDraw();
-				piece = PentominoDatabase.data[pentID][mutation];
-				addPiece();
-			}
-			else {
-			mutation = stMutation;
-		}
-		}
-	}
-
-	public static void move(int x) {
-		if (locW + x >= 0 && locW + x < width) {
-			if (fitInMove(x, 0)) // if new position feet then
-			{
-				reDraw();
-				locW += x;
-				addPiece();
-			}
-		}
-	}
-
-	public static void dropDown() {
-		if (fitInMove(0, 1)) {
-			reDraw();
-			locH += 1;
-			addPiece();
-		} else {
-			onTable();
-			locH = 0;
-			checkDelRows();
-			nextPiece();
-		}
-	}
+	
 
 	public static void onTable() {
 		for (int i = 0; i < field.length; i++) {
