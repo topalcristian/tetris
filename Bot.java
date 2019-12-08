@@ -12,7 +12,7 @@ public class Bot extends HeapSort {
 	public static int score = 0;
 	public static int[][] field = new int[height][width];
 	public static int[][] field2 = new int[height][width];
-
+	//public static UI ui = new UI(height, width, 50);
 	public static void main(String[] args) {
 
 		int popSize = 500;
@@ -21,12 +21,11 @@ public class Bot extends HeapSort {
 		Random generator = new Random(System.currentTimeMillis());
 		Individual[] population = new Individual[popSize];
 		
-		//initializing word
+		//initializing world
 		for (int i = 0; i < popSize; i++) {
-			
 			double[] weights = new double[4];
 	        for (int j = 0; j < weights.length; j++){
-	            weights[j] = (Math.random()*2-1);
+	            weights[j] = (Math.random()*1);
 	        }
 			population[i] = new Individual(weights);
 		}
@@ -34,12 +33,12 @@ public class Bot extends HeapSort {
 		
 		int generation = 0;
 
-		while(population[0].getFitness() != 10) {
+		while(population[0].getFitness() != 5) {
 			fitnessGenerator(population);
 			generation++;
 			population = mutatePopulation(crossover(population));
 			System.out.println("Generation "+ generation + "\n Best Individual Fitness = " + population[0].getFitness());
-			if(population[0].getFitness() != 1.0)
+			if(population[0].getFitness() != 5)
 				show(population);
 			else
 				System.out.println("Individual " + 1 + " : " + population[0].genoToPhenotype() + "\n" + " Fitness : " +  population[0].getFitness());
@@ -48,10 +47,9 @@ public class Bot extends HeapSort {
 	private static int calculateHeight(int[][] fieldCalc){
 		int h = 0;
 		for(int j = 0; j < fieldCalc[0].length; j++) {
-
-		for(int i = fieldCalc.length; i > 0 ; i--) {
+		for(int i = fieldCalc.length-1; i > 0 ; i--) {
 			if (fieldCalc[i][j] == -1) h++;
-			else i=0;
+			else i = 0;
 		}
 		
 	}
@@ -60,7 +58,7 @@ public class Bot extends HeapSort {
 	private static int calculateHoles(int[][] fieldCalc){
 		int holes = 0;
 		for(int j = 0; j < fieldCalc[0].length; j++) {
-		for(int i = fieldCalc.length; i > 0 ; i--) {
+		for(int i = fieldCalc.length - 1; i > 0 ; i--) {
 			if (fieldCalc[i][j] != -1) 
 				for (int x = i; i > 0 ; i--) {
 					if (fieldCalc[i][j] == -1) holes++; 
@@ -87,11 +85,10 @@ public class Bot extends HeapSort {
 		return lines;
 	}
 	private static int calculateBumpiness(int[][] fieldCalc){
-		int[] heights = new int[fieldCalc[0].length-1];
+		int[] heights = new int[fieldCalc[0].length];
 		int h = 0;
 		for(int j = 0; j < fieldCalc[0].length; j++) {
-
-			for(int i = fieldCalc.length; i > 0 ; i--) {
+			for(int i = fieldCalc.length -1; i > 0 ; i--) {
 				if (fieldCalc[i][j] == -1) h++;
 				else {
 					i = 0;
@@ -108,11 +105,8 @@ public class Bot extends HeapSort {
 		
 	}
 	private static void fitnessGenerator(Individual[] individual){
-		double fitness;
-		double count;
 
 		for (int i = 0; i < individual.length;i++) {
-			
 			individual[i].setFitness(play(individual[i].chromosome));
 		}
 		sort(individual);
@@ -126,10 +120,11 @@ public class Bot extends HeapSort {
 		}
 		nextPiece();
 		while (fitInMove(0,0)) {
-		
+			
 		field = best(allOutcomesPossible(pentID, field), chromosome);
 		//addPiece();
-		locH = 0;
+		//ui.setState(field, field2);
+		onTable();
 		checkDelRows();
 		nextPiece();
 		}
@@ -138,16 +133,39 @@ public class Bot extends HeapSort {
 	
 	public static int[][] best(int[][][][] fields, double[] chromosome) {
 		double score1 = 0;
-		double score2 = 0;
 		int z = 0;
 		int x = 0;
+		double score2 = calculateHeight(fields[0][0])*chromosome[0] + calculateHoles(fields[0][0])*chromosome[1] + calculateLines(fields[0][0])*chromosome[2] + calculateBumpiness(fields[0][0])*chromosome[3]; 
 		for(int j = 0; j < fields.length; j++) {
-		for(int i = 0; i < fields[0].length; i++) {
+		for(int i = 1; i < fields[0].length; i++) {
 			score1 = calculateHeight(fields[j][i])*chromosome[0] + calculateHoles(fields[j][i])*chromosome[1] + calculateLines(fields[j][i])*chromosome[2] + calculateBumpiness(fields[j][i])*chromosome[3]; 
-			if (score2 > score1) {score2 = score1; z = i;x = j;}
+			if (score1 < score2) {score2 = score1; z = i;x = j;}
 		}
 		}
+
+		
 		return fields[x][z];
+	}
+	
+	
+	private static int[][][][] allOutcomesPossible(int ID, int[][] field){
+		int[][] field2 = field;
+		int[][][][] outcome = new int[PentominoDatabase.data[ID].length][width][height][width];
+		for (int j = 0; j < outcome.length; j++) {
+		for (int i = 0; i < outcome[0].length; i++) {
+			locW=i;
+			if(fitInMove(0,0)) {
+			while(fitInMove(0,1)) {
+				locH++;
+			}
+			addPiece();
+			outcome[j][i] = field;
+			field = field2;
+			}
+		}
+
+		}
+		return outcome;
 	}
 	
 	public static void rotate(int x) {
@@ -312,28 +330,18 @@ public class Bot extends HeapSort {
 		}
 	}
 	
-	private static int[][][][] allOutcomesPossible(int ID, int[][] field){
-		int[][][][] outcome = new int[PentominoDatabase.data[pentID].length][width][height][width];
-		for (int j = 0; j < field.length; j++) {
-		for (int i = 0; i < field[0].length; i++) {
-			while(fitInMove(0,1)) {
-				locH++;
-			}
-			addPiece();
-			outcome[j][i] = field;
-			removePiece();
-		}
-		}
-		return outcome;
-	}
+
 
 	private static Individual[] mutatePopulation(Individual[] population){
-		double mutationRate = 0.07;
+		double mutationRate = 0.1;
+		double mutationRate2 = 0.17;
 		Random weightChromosome = new Random(System.currentTimeMillis());
  
 		for (int i = 0 ;i < population.length; i++) {
 			 double roll = Math.random();
 			if (roll <= mutationRate){
+				 population[i].chromosome[weightChromosome.nextInt(4)] -= 0.2;
+			}else 	if (roll <= mutationRate2){
 				 population[i].chromosome[weightChromosome.nextInt(4)] += 0.2;
 			}
 		}
