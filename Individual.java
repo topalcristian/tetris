@@ -1,8 +1,8 @@
 
 public class Individual {
 	
-	double[] chromosome;
-	double fitness;
+	public double[] chromosome = new double[4];
+	public double fitness = 0;
 	
 	public Individual(double[] chromosome) {
 		this.chromosome = chromosome;

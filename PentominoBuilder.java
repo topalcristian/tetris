@@ -8,13 +8,13 @@ public class PentominoBuilder {
     //All basic pentominoes that will be rotated and inverted
     private static int[][][] basicDatabase = {
             {
-            	// pentomino representation X
+            	// pentomino representation X 0
                     {0,1,0},
                     {1,1,1},
                     {0,1,0}
             },
             {
-            	// pentomino representation I
+            	// pentomino representation I 1
                     {1},
                     {1},
                     {1},
@@ -23,64 +23,64 @@ public class PentominoBuilder {
             },
 
             {
-            	// pentomino representation T
+            	// pentomino representation T 2
                     {1,1,1},
                     {0,1,0},
                     {0,1,0}
             },
             {
-            	// pentomino representation U
+            	// pentomino representation U 3
                     {1,1},
                     {1,0},
                     {1,1}
             },
             {
-            	// pentomino representation V
+            	// pentomino representation V 4
                     {1,1,1},
                     {1,0,0},
                     {1,0,0}
             },
             {
-            	// pentomino representation W
+            	// pentomino representation W 5
                     {0,0,1},
                     {0,1,1},
                     {1,1,0}
             },
             {
-            	// pentomino representation Y
+            	// pentomino representation Y 6
                     {1,0},
                     {1,1},
                     {1,0},
                     {1,0}
             },            
             {
-            	// pentomino representation Z
+            	// pentomino representation Z 7
                 	{0,1,1},
                 	{0,1,0},
                 	{1,1,0}
             },
             {
-            	// pentomino representation L
+            	// pentomino representation L 8
             		{1,0},
                     {1,0},
                     {1,0},
                     {1,1}
             },
             { //9
-        		// pentomino representation P
+        		// pentomino representation P 9
         		    {1,1},
                     {1,1},
                     {1,0}
             },
             { //10
-              // pentomino representation N
+              // pentomino representation N 10
                     {0,1},
                     {1,1},
                     {1,0},
                     {1,0}
             },
             { //11
-              // pentomino representation F
+              // pentomino representation F 11
                     {0,1,1},
                     {1,1,0},
                     {0,1,0}

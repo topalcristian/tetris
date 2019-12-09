@@ -11,6 +11,10 @@ public class UI extends JPanel
     private JFrame window;
     private int[][] state;
     private int size;
+    private int gameScore=0;
+	public int TNpentID;
+	public int[][] TNpiece = {{-1, -1, -1 },{-1, -1, -1 },{-1, -1, -1 }};
+    
     
     // Constructor: sets everything up
     public UI(int x, int y, int _size)
@@ -24,6 +28,7 @@ public class UI extends JPanel
         window.add(this);
         window.pack();
         window.setVisible(true);
+        window.setBackground(new Color(209, 208, 208));
         /*JLabel label = new JLabel("");
         label.setHorizontalAlignment(SwingConstants.LEFT); // set the horizontal alignement on the x axis !
         label.setVerticalAlignment(SwingConstants.TOP); // set the verticalalignement on the y axis !
@@ -32,7 +37,7 @@ public class UI extends JPanel
         label.setBackground(Color.GRAY);
         label.setForeground(Color.BLACK);
         window.add(label);*/
-
+/*
         Tetris t = new Tetris();
         window.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
@@ -74,7 +79,7 @@ public class UI extends JPanel
 				}
 			}
 		}.start();
-
+*/
     
         state = new int[x][y];
         for (int i = 0; i < state.length; i++)
@@ -88,8 +93,19 @@ public class UI extends JPanel
         
     }
     
+    public void giveScore(int score) {
+    	gameScore = score; 
+    }
+    
+    
+    public void giveNPiece(int NpentID, int[][] Npiece) {
+    	TNpentID = NpentID; 
+    	TNpiece = Npiece;
+    	
+    }
+    
     public void gameLost() {
-    	JOptionPane.showMessageDialog(this,"Game Over\nYour Score is : " + Tetris.score);  
+    	JOptionPane.showMessageDialog(this,"Game Over\nYour Score is : " + gameScore);  
         System.exit(0);
     }
 
@@ -108,7 +124,10 @@ public class UI extends JPanel
         localGraphics2D.drawString("Tetris", 100, 100);
         Font myFont2 = new Font("ARIAL", Font.BOLD, 20);
         localGraphics2D.setFont(myFont2);
-        localGraphics2D.drawString("Score    "+ Tetris.score, 330, 500);  
+        localGraphics2D.setColor(new Color(209, 208, 208));
+        localGraphics2D.fill(new Rectangle2D.Double( 330,450, 100, 100));
+        localGraphics2D.setColor(Color.BLACK);
+        localGraphics2D.drawString("Score    "+ gameScore, 330, 500);   
         localGraphics2D.drawString("Next Piece    ", 330, 200);  
         localGraphics2D.setColor(Color.GRAY);
         for (int i = 0; i <= state.length; i++)
@@ -131,7 +150,7 @@ public class UI extends JPanel
         }
         
         
-        /*
+        
         // next piece grid
         localGraphics2D.setColor(Color.GRAY);
         for (int i = 0; i < 6; i++){
@@ -143,9 +162,9 @@ public class UI extends JPanel
         // next piece fill
         for (int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
-                if(Tetris.Npiece.length>i && Tetris.Npiece[i].length>j){
-                    if(Tetris.Npiece[i][j]==1){
-                        localGraphics2D.setColor(GetColorOfID(Tetris.NpentID));
+                if(TNpiece.length>i && TNpiece[i].length>j){
+                    if(TNpiece[i][j]==1){
+                        localGraphics2D.setColor(GetColorOfID(TNpentID));
                     }else{
                     localGraphics2D.setColor(Color.LIGHT_GRAY);
                     }
@@ -156,7 +175,7 @@ public class UI extends JPanel
             }
         }
         
-*/
+
     }
 
     // Decodes the ID of a pentomino into a color

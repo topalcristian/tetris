@@ -163,6 +163,7 @@ public class Tetris {
 		NpentID = r.nextInt(PentominoDatabase.data.length);
 		Nmutation = r.nextInt(PentominoDatabase.data[NpentID].length);
 		Npiece = PentominoDatabase.data[NpentID][Nmutation];
+		ui.giveNPiece(NpentID,Npiece); 
 		locW = 0;
 		locH = 0;
 		if (fitInMove(0, 0)) {
