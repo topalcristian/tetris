@@ -21,16 +21,20 @@ public class Bot extends HeapSort {
 	public static int[][] field2 = new int[height][width];
 	public static int tournamentSize = 100;
 	public static int newCandidatesLength = 300; 
-	public static int oldCandidatesLength = 700; 
+	public static int oldCandidatesLength = 560; 
 	public static int NpentID;
 	public static int Nmutation;
 	public static int[][] Npiece;
+	public static boolean yesUi = true;
+	public static UI ui;
 	//public static int ordered = 0;
 	//public static int[] order = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11, 12, 13, 14, 15, 16, 17 };
-	public static UI ui = new UI(height, width, 50);
+	//
 	
 	public static void main(String[] args) {
-		int popSize = 1000;
+		if(yesUi)
+		ui = new UI(height, width, 50);
+		int popSize = 860;
 		Individual[] population = new Individual[popSize];
 		File tmpDir = new File("saver.txt");
 		boolean exists = tmpDir.exists();
@@ -56,7 +60,7 @@ public class Bot extends HeapSort {
 				population[Integer.parseInt(tr[0])] = new Individual(weights);;
 				population[Integer.parseInt(tr[0])].fitness = Double.parseDouble(tr[5]);
 				line = reader.readLine();
-			}
+		}
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -68,14 +72,14 @@ public class Bot extends HeapSort {
 		//initializing world
 		for (int i = 0; i < popSize; i++) {
 			double[] weights = new double[4];
-	        /*for (int j = 0; j < weights.length; j++){
+	        for (int j = 0; j < weights.length; j++){
 	            weights[j] = Math.abs((Math.random()-0.5));
-	        }*/
-			weights[0] = 0.3260322639814451;
-			weights[1] = 0.5777405035775547;
-			weights[2] = 0.6478733873059036;
-			weights[3] = 0.37440479082119316;
-
+	        }/*
+			weights[0] = 0.3246706876343459;
+			weights[1] = 0.5622481903490607;
+			weights[2] = 0.6589314804247198;
+			weights[3] = 0.3798357818130548;
+*/
 
 			
 			population[i] = normalize(new Individual(weights));
@@ -84,28 +88,15 @@ public class Bot extends HeapSort {
 		
 		int generation = 0;
 		
-		while(population[0].getFitness() != 17) {
+		while(population[0].getFitness() != 70) {
 			
 			fitnessGenerator(population);
 			generation++;
 			population = deleteNLastReplacement(population, mutatePopulation(crossover(population)));
 			System.out.println("Generation "+ generation + "\n Best Individual Fitness = " + population[0].getFitness());
-			if(population[0].getFitness() == 17) {
-				PrintWriter writer;
-			try {
-				writer = new PrintWriter("saver.txt", "UTF-8");
-				for (int i = 0; i < population.length; i++) {
-					writer.println(i + " " + population[i].genoToPhenotype() + population[i].getFitness());
-				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-				
+			if(generation == 500) {
+				System.out.println("Individual " + 1 + " : " + population[0].genoToPhenotype() + "\n" + " Fitness : " +  population[0].getFitness());
+				show(population);
 				}
 			else
 				System.out.println("Individual " + 1 + " : " + population[0].genoToPhenotype() + "\n" + " Fitness : " +  population[0].getFitness());
@@ -206,46 +197,42 @@ public class Bot extends HeapSort {
 		}
 		Random r = new Random();
 		NpentID = r.nextInt(PentominoDatabase.data.length);
-		Nmutation = r.nextInt(PentominoDatabase.data[NpentID].length);
+		Nmutation = 0;
 		Npiece = PentominoDatabase.data[NpentID][Nmutation];
 		nextPiece();
+		
 		while (fitInMove(0,0)) {
 		field = best(allOutcomesPossible(pentID), chromosome);
-		
+		if(yesUi) {
 		ui.setState(field, field2);
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}}
 		score2 += checkDelRows();
+		if(yesUi) {
 		ui.giveScore(score2);
 		ui.setState(field, field2);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 		nextPiece();
 		}
 		
-/*
-		ui.setState(field, field2);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		return score2;
 	}
 	
 	public static int[][] best(int[][][][] fields, double[] chromosome) {
 		double score1 = 0;
 		int z = 0;
-		int x = 0;/*
+		int x = 0;
+		//TODO 
+		
+		/*
 		for(int j = 0; j < fields.length; j++) {
 		for(int i = 0; i < fields[0].length; i++) {
 			for(int jj = 0; jj < fields[0][0].length; jj++) {
@@ -273,7 +260,7 @@ public class Bot extends HeapSort {
 		return fields[x][z];
 	}
 	
-	
+	// TODO FIX BUG WITH BLUE BOARD
 	private static int[][][][] allOutcomesPossible(int ID){
 		
 		int[][] field3 = new int[field.length][field[0].length];
@@ -314,6 +301,7 @@ public class Bot extends HeapSort {
 				for(int ii = 0; ii < field.length; ii++) {
 					for(int jj = 0; jj < field[0].length; jj++) {
 						outcome[j][i][ii][jj] = outcome[0][0][ii][jj];
+						
 				}
 				}
 			}
@@ -384,8 +372,9 @@ public class Bot extends HeapSort {
 		piece = Npiece;
 		Random r = new Random();
 		NpentID = r.nextInt(PentominoDatabase.data.length);
-		Nmutation = r.nextInt(PentominoDatabase.data[NpentID].length);
+		Nmutation = 0;
 		Npiece = PentominoDatabase.data[NpentID][Nmutation];
+		if(yesUi)
 		ui.giveNPiece(NpentID,Npiece); 
 		locW = 0;
 		locH = 0;
@@ -414,7 +403,7 @@ public class Bot extends HeapSort {
 
 
 	private static Individual[] mutatePopulation(Individual[] population){
-		double mutationRate = 0.05;
+		double mutationRate = 0.25;
 
 		Random weightChromosome = new Random(System.currentTimeMillis());
  
@@ -445,9 +434,19 @@ public class Bot extends HeapSort {
 	}
 
 	private static void show(Individual[] parent){
+		PrintWriter writer;
+	try {
+		writer = new PrintWriter("saver.txt", "UTF-8");
 		for (int i = 0; i < parent.length; i++) {
-			System.out.println("Individual " + i + " : " + parent[i].genoToPhenotype() + "\n" + " Fitness : " + parent[i].getFitness());
+			writer.println(i + " " + parent[i].genoToPhenotype() + parent[i].getFitness());
 		}
+	} catch (FileNotFoundException e) {
+		
+		e.printStackTrace();
+	} catch (UnsupportedEncodingException e) {
+		e.printStackTrace();
+	}
+	
 	}
 
 	private static Individual[] selectionMethod(Individual[] select){

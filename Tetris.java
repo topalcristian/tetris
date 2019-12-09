@@ -11,7 +11,7 @@ public class Tetris {
 	public static int score = 0;
 	public static int[][] field = new int[height][width];
 	public static int[][] field2 = new int[height][width];
-	public static UI ui = new UI(height, width, 30);
+	public static UI ui = new UI(height, width, 40, " ");
 	public static int NpentID;
 	public static int Nmutation;
 	public static int[][] Npiece;
@@ -64,6 +64,7 @@ public class Tetris {
 			onTable();
 			locH = 0;
 			checkDelRows();
+			ui.giveScore(score);
 			nextPiece();
 		}
 	}

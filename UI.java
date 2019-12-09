@@ -17,7 +17,7 @@ public class UI extends JPanel
     
     
     // Constructor: sets everything up
-    public UI(int x, int y, int _size)
+    public UI(int x, int y, int _size, String s)
     {
         size = _size;
         setPreferredSize(new Dimension( 3*y * size, 200 + x * size));
@@ -29,15 +29,6 @@ public class UI extends JPanel
         window.pack();
         window.setVisible(true);
         window.setBackground(new Color(209, 208, 208));
-        /*JLabel label = new JLabel("");
-        label.setHorizontalAlignment(SwingConstants.LEFT); // set the horizontal alignement on the x axis !
-        label.setVerticalAlignment(SwingConstants.TOP); // set the verticalalignement on the y axis !
-        label.setFont(new java.awt.Font("Arial", Font.BOLD, 23));
-        label.setOpaque(true);
-        label.setBackground(Color.GRAY);
-        label.setForeground(Color.BLACK);
-        window.add(label);*/
-/*
         Tetris t = new Tetris();
         window.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
@@ -79,7 +70,34 @@ public class UI extends JPanel
 				}
 			}
 		}.start();
-*/
+
+    
+        state = new int[x][y];
+        for (int i = 0; i < state.length; i++)
+        {
+            for (int j = 0; j < state[i].length; j++)
+            {
+                state[i][j] = -1;
+            }
+        }
+        
+        
+    }
+    
+    // Constructor: sets everything up
+    public UI(int x, int y, int _size)
+    {
+        size = _size;
+        setPreferredSize(new Dimension( 3*y * size, 200 + x * size));
+
+        window = new JFrame("Pentomino");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(true);
+        window.add(this);
+        window.pack();
+        window.setVisible(true);
+        window.setBackground(new Color(209, 208, 208));
+       
     
         state = new int[x][y];
         for (int i = 0; i < state.length; i++)
