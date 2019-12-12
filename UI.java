@@ -50,7 +50,7 @@ public class UI extends JPanel {
 		// Initializing Window
 		window = new JFrame("Tetris");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(true);
+		window.setResizable(false);
 		window.add(this);
 		window.pack();
 		window.setVisible(true);
@@ -165,12 +165,11 @@ public class UI extends JPanel {
 		// Sets up window
 		window = new JFrame("Tetris");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(true);
+		window.setResizable(false);
 		window.add(this);
 		window.pack();
 		window.setVisible(true);
 		window.setBackground(defaultColor);
-
 		window.setBounds((int) 0, 0, 4 * y * size, 250 + z + x * size);
 	    if (z== 0)
 	    z = 1;
@@ -263,7 +262,7 @@ public class UI extends JPanel {
 		// Displays Next Piece
 		localGraphics2D.setFont(myFont2);
 		localGraphics2D.setColor(Color.WHITE);
-		localGraphics2D.drawString("Next Piece    ", 330, 200);
+		localGraphics2D.drawString("Next Piece : ", 330, 200);
 
 		
 		// Next piece grid
@@ -287,7 +286,7 @@ public class UI extends JPanel {
 				} else {
 					localGraphics2D.setColor(defaultColor);
 				}
-				localGraphics2D.fill(new Rectangle2D.Double(i * size + 331, j * size + 221, size - 1, size - 1));
+				localGraphics2D.fill(new Rectangle2D.Double( j * size +331 ,i * size+221 , size - 1, size - 1));
 			}
 		}
 
