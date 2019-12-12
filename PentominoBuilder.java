@@ -47,40 +47,40 @@ public class PentominoBuilder {
                     {1,1,0}
             },
             {
-            	// pentomino representation Y 6
+            	// pentomino representation Y Right - 6 Left - 7 
                     {1,0},
                     {1,1},
                     {1,0},
                     {1,0}
             },            
             {
-            	// pentomino representation Z 7
+            	// pentomino representation Z Right - 8 Left - 9 
                 	{0,1,1},
                 	{0,1,0},
                 	{1,1,0}
             },
             {
-            	// pentomino representation L 8
+            	// pentomino representation L Right - 10 Left - 11 
             		{1,0},
                     {1,0},
                     {1,0},
                     {1,1}
             },
             { //9
-        		// pentomino representation P 9
+        		// pentomino representation P Right - 12 Left - 13 
         		    {1,1},
                     {1,1},
                     {1,0}
             },
             { //10
-              // pentomino representation N 10
+              // pentomino representation N Right - 14 Left - 15 
                     {0,1},
                     {1,1},
                     {1,0},
                     {1,0}
             },
             { //11
-              // pentomino representation F 11
+              // pentomino representation F Right - 16 Left - 17 
                     {0,1,1},
                     {1,1,0},
                     {0,1,0}
@@ -126,7 +126,6 @@ public class PentominoBuilder {
             int[][][] tempDatabase2 = new int[tempDatabase.length/2][tempDatabase[0].length][tempDatabase[0].length];
             for(int j=0;j<tempDatabase2.length;j++)
             {
-            	
                 tempDatabase2[j]=tempDatabase[j];
             }
             int[][][] tempDatabase3 = new int[tempDatabase.length/2][tempDatabase[0].length][tempDatabase[0].length];
