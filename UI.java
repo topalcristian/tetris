@@ -27,7 +27,7 @@ public class UI extends JPanel {
 	
 	// Data of the Next Piece
 	public int TNpentID;
-	public int[][] TNpiece = { { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 } };
+	public int[][] TNpiece = {{ -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 } };
 	
 	// Stores previous Highscores
 	public int[] highscore = {0,0,0,0,0};
@@ -43,7 +43,7 @@ public class UI extends JPanel {
 		high = 1;
 		//Sets the Dimensions of the board
 		size = _size;
-		setPreferredSize(new Dimension(3 * y * size, 200 + x * size));
+		setPreferredSize(new Dimension(4 * y * size, 250 + x * size));
 		
 
 		
@@ -55,7 +55,7 @@ public class UI extends JPanel {
 		window.pack();
 		window.setVisible(true);
 		
-		window.setBounds((int) 0, 0, 3 * y * size, 250 + z + x * size);
+		window.setBounds((int) 0, 0, 4 * y * size, 250 + z + x * size);
 	    if (z== 0)
 	    z = 1;
 	    else z = 0;
@@ -72,7 +72,7 @@ public class UI extends JPanel {
 		panel.setBackground(defaultColor);
 		ActionListener reset = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    window.setBounds((int) 0, 0, 3 * y * size, 250 + z + x * size);
+			    window.setBounds((int) 0, 0, 4 * y * size, 250 + z + x * size);
 			    if (z== 0)
 			    z = 1;
 			    else z = 0;
@@ -84,14 +84,14 @@ public class UI extends JPanel {
 		restart.addActionListener(reset);
 		restart.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-			    window.setBounds((int) 0, 0, 3 * y * size, 250 + z + x * size);
+			    window.setBounds((int) 0, 0, 4 * y * size, 250 + z + x * size);
 			    if (z== 0)
 			    z = 1;
 			    else z = 0;
 		    }
 
 		    public void mouseExited(java.awt.event.MouseEvent evt) {
-			    window.setBounds((int) 0, 0, 3 * y * size, 250 + z + x * size);
+			    window.setBounds((int) 0, 0, 4 * y * size, 250 + z + x * size);
 			    if (z== 0)
 			    z = 1;
 			    else z = 0;		   
@@ -160,7 +160,7 @@ public class UI extends JPanel {
 		
 		// Sets default Dimensions
 		size = _size;
-		setPreferredSize(new Dimension(3 * y * size, 200 + x * size));
+		setPreferredSize(new Dimension(4 * y * size, 250 + x * size));
 
 		// Sets up window
 		window = new JFrame("Tetris");
@@ -171,7 +171,7 @@ public class UI extends JPanel {
 		window.setVisible(true);
 		window.setBackground(defaultColor);
 
-		window.setBounds((int) 0, 0, 3 * y * size, 250 + z + x * size);
+		window.setBounds((int) 0, 0, 4 * y * size, 250 + z + x * size);
 	    if (z== 0)
 	    z = 1;
 	    else z = 0;
@@ -269,10 +269,10 @@ public class UI extends JPanel {
 		// Next piece grid
 		localGraphics2D.setColor(Color.WHITE);
 		for (int i = 0; i < 6; i++) {
-			localGraphics2D.drawLine(i * 40 + 330, 220, i * 40 + 330, 420);
+			localGraphics2D.drawLine(i * size + 330, 220, i * size + 330, 220 + 5 * size);
 		}
 		for (int i = 0; i < 6; i++) {
-			localGraphics2D.drawLine(330, i * 40 + 220, 530, i * 40 + 220);
+			localGraphics2D.drawLine(330, i * size + 220, 330 +  5 * size, i * size + 220);
 		}
 		
 		// Next piece fill
@@ -287,7 +287,7 @@ public class UI extends JPanel {
 				} else {
 					localGraphics2D.setColor(defaultColor);
 				}
-				localGraphics2D.fill(new Rectangle2D.Double(i * 40 + 331, j * 40 + 221, 40 - 1, 40 - 1));
+				localGraphics2D.fill(new Rectangle2D.Double(i * size + 331, j * size + 221, size - 1, size - 1));
 			}
 		}
 

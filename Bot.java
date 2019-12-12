@@ -64,7 +64,7 @@ public class Bot extends HeapSort {
 	public static void main(String[] args) {
 		// Displays UI only if set true
 		if (yesUi)
-			ui = new UI(height, width, 50);
+			ui = new UI(height, width, 30);
 		
 		// Initializes population from file
 		int popSize = 860;
